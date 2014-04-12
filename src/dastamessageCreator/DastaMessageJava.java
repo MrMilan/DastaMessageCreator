@@ -50,49 +50,59 @@ public class DastaMessageJava {
         mzcr.cz.ns.dasta.ds4.ds_ip.ObjectFactory factoryDsIp = new mzcr.cz.ns.dasta.ds4.ds_ip.ObjectFactory();
 
         /*Nacteni xml*/
-        /*C:\\Documents and Settings\\Milan\\Dokumenty\\škola\\FBMI\\3rocnik\\17bieth\\Programs\\DastaMessageCreator\\zprava2.xml*/
-
+        /*C:\\Documents and Settings\\Milan\\Dokumenty\\škola\\FBMI\\3rocnik\\17bieth\\Programs\\DastaMessageCreator\\message2.xml*/
         File fXmlFile;
         JAXBContext context = JAXBContext.newInstance(Dasta.class);
         Unmarshaller un = context.createUnmarshaller();
         Dasta dastaInput = factoryDasta.createDasta();
-        JAXBElement<Dasta> zprava2 = null;
+        JAXBElement<Dasta> message2 = null;
         try {
             fXmlFile = new File(".\\zprava2.xml");
-            zprava2 = un.unmarshal(new StreamSource(fXmlFile), Dasta.class);
+            message2 = un.unmarshal(new StreamSource(fXmlFile), Dasta.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String verzeDs = zprava2.getValue().getVerzeDs();
-        System.out.println(verzeDs);
 
         /**
          * Zakladni hlavicka
          */
         Dasta dasta = factoryDasta.createDasta();
+        String verzeDs = message2.getValue().getVerzeDs();
+        System.out.println("verzeDs-> " + verzeDs);
+        dasta.setVerzeDs(verzeDs);
 
-        dasta.setVerzeDs(
-                "04.06.08");
-        dasta.setIdSoubor(
-                "MEDICALC_KK11115_2005-12-12T14:46:25");
-        dasta.setBinPriloha(
-                "T");
-        dasta.setUr(
-                "T");
-        dasta.setTypOdesm(
-                "KK");
+        String idSoubor = message2.getValue().getIdSoubor();
+        System.out.println("idSouboru-> " + idSoubor);
+        dasta.setIdSoubor(idSoubor);
+
+        String binPriloha = message2.getValue().getBinPriloha();
+        System.out.println("binPriloha-> " + binPriloha);
+        dasta.setBinPriloha(binPriloha);
+
+        String ur = message2.getValue().getUr();
+        System.out.println("ur-> " + ur);
+        dasta.setUr(ur);
+
+        String typOdesm = message2.getValue().getTypOdesm();
+        System.out.println("TypOdesm-> " + typOdesm);
+        dasta.setTypOdesm(typOdesm);
 
         /**
          * Informace o programu, ktery generoval zpravu
          */
         ZdrojIsType zdrojIsType = factoryDasta.createZdrojIsType();
 
-        zdrojIsType.setKodFirmy(
-                "MEDICALC");
-        zdrojIsType.setKodProg(
-                "WMEXP");
-        zdrojIsType.setVerzeProg(
-                "2.2.3.8");
+        String kodFirmy = message2.getValue().getZdrojIs().getKodFirmy();
+        System.out.println("kodFirmy-> " + kodFirmy);
+        zdrojIsType.setKodFirmy(kodFirmy);
+
+        String kodProg = message2.getValue().getZdrojIs().getKodProg();
+        System.out.println("kodProg-> " + kodProg);
+        zdrojIsType.setKodProg(kodProg);
+
+        String verzeProg = message2.getValue().getZdrojIs().getVerzeProg();
+        System.out.println("verzeProg-> " + verzeProg);
+        zdrojIsType.setVerzeProg(verzeProg);
 
         /**
          * Poskytovatel dat
