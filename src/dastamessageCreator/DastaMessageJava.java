@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -38,27 +39,31 @@ public class DastaMessageJava {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws JAXBException, ParserConfigurationException, SAXException, IOException {
-
-        /*Nacteni java DOM by Mkyong tutorial*/
-        /*C:/Documents and Settings/Milan/Dokumenty/škola/FBMI/3rocnik/17bieth/Programs/DastaMessageCreator/zprava2.xml*/
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder;
-        File fXmlFile;
-        Document doc;
-        try {
-            fXmlFile = new File("C:/Documents and Settings/Milan/Dokumenty/škola/FBMI/3rocnik/17bieth/Programs/DastaMessageCreator/zprava2.xml");
-            dBuilder = dbFactory.newDocumentBuilder();
-            doc = dBuilder.parse(fXmlFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws JAXBException {
+        
         /*
          * Vytvoreni fantory pro jednotlive balicky
          */
         mzcr.cz.ns.dasta.ds4.ds_dasta.ObjectFactory factoryDasta = new mzcr.cz.ns.dasta.ds4.ds_dasta.ObjectFactory();
         mzcr.cz.ns.dasta.ds4.ds_type.ObjectFactory factoryDsType = new mzcr.cz.ns.dasta.ds4.ds_type.ObjectFactory();
         mzcr.cz.ns.dasta.ds4.ds_ip.ObjectFactory factoryDsIp = new mzcr.cz.ns.dasta.ds4.ds_ip.ObjectFactory();
+        
+        /*Nacteni xml*/
+        /*C:\\Documents and Settings\\Milan\\Dokumenty\\škola\\FBMI\\3rocnik\\17bieth\\Programs\\DastaMessageCreator\\zprava2.xml*/
+        File fXmlFile;
+        JAXBContext context = JAXBContext.newInstance(Dasta.class);
+        Unmarshaller un = context.createUnmarshaller();
+        Dasta dastaInput = factoryDasta.createDasta();
+        try {
+            fXmlFile = new File(".\\zprava2.xml");
+            dastaInput = (Dasta) un.unmarshal(fXmlFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String verzeDs = dastaInput.getVerzeDs();
+        System.out.println(verzeDs);
+        
+
 
         /**
          * Zakladni hlavicka
