@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -40,30 +41,30 @@ public class DastaMessageJava {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws JAXBException {
-        
+
         /*
          * Vytvoreni fantory pro jednotlive balicky
          */
         mzcr.cz.ns.dasta.ds4.ds_dasta.ObjectFactory factoryDasta = new mzcr.cz.ns.dasta.ds4.ds_dasta.ObjectFactory();
         mzcr.cz.ns.dasta.ds4.ds_type.ObjectFactory factoryDsType = new mzcr.cz.ns.dasta.ds4.ds_type.ObjectFactory();
         mzcr.cz.ns.dasta.ds4.ds_ip.ObjectFactory factoryDsIp = new mzcr.cz.ns.dasta.ds4.ds_ip.ObjectFactory();
-        
+
         /*Nacteni xml*/
         /*C:\\Documents and Settings\\Milan\\Dokumenty\\škola\\FBMI\\3rocnik\\17bieth\\Programs\\DastaMessageCreator\\zprava2.xml*/
+
         File fXmlFile;
         JAXBContext context = JAXBContext.newInstance(Dasta.class);
         Unmarshaller un = context.createUnmarshaller();
         Dasta dastaInput = factoryDasta.createDasta();
+        JAXBElement<Dasta> zprava2 = null;
         try {
             fXmlFile = new File(".\\zprava2.xml");
-            dastaInput = (Dasta) un.unmarshal(fXmlFile);
+            zprava2 = un.unmarshal(new StreamSource(fXmlFile), Dasta.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String verzeDs = dastaInput.getVerzeDs();
+        String verzeDs = zprava2.getValue().getVerzeDs();
         System.out.println(verzeDs);
-        
-
 
         /**
          * Zakladni hlavicka
