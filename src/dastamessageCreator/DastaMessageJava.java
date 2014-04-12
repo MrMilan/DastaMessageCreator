@@ -110,10 +110,14 @@ public class DastaMessageJava {
         PmType pm = factoryDasta.createPmType();
         AsType as1 = factoryDasta.createAsType();
 
-        as1.setTyp(
-                "I");
-        as1.setVnitrni(
-                "999");
+        String asTyp = message2.getValue().getPm().getAs().getTyp();
+        System.out.println("as1Typ-> " + asTyp);
+        as1.setTyp(asTyp);
+
+        String asVnitrni = message2.getValue().getPm().getAs().getVnitrni();
+        System.out.println("as1Vnitrni-> " + asVnitrni);
+        as1.setVnitrni(asVnitrni);
+
         pm.setAs(as1);
 
         /**
@@ -121,28 +125,43 @@ public class DastaMessageJava {
          */
         GarantDatType garantDat = factoryDsType.createGarantDatType();
 
-        garantDat.setIdGarant(
-                "450124145");
-        garantDat.setOdbornost(
-                "801");
-        garantDat.setValue(
-                "MUDr. Jmeno Prijmeni");
+        String gID = message2.getValue().getGarantDat().getIdGarant();
+        System.out.println("Garanta Id-> " + gID);
+        garantDat.setIdGarant(gID);
+
+        String gOdbor = message2.getValue().getGarantDat().getOdbornost();
+        System.out.println("Garant Odbornost-> " + gOdbor);
+        garantDat.setOdbornost(gOdbor);
+
+        String gValue = message2.getValue().getGarantDat().getValue();
+        System.out.println("Garant Value-> " + gValue);
+        garantDat.setValue(gValue);
 
         /**
          * Informace o zdravotnickem zarizeni
          */
         IsType is = factoryDasta.createIsType();
+        int vemPrvni = 0;//message2.getValue().getIs().size();
 
-        is.setIco(
-                "12345678");
-        is.setIcz(
-                "44101000");
-        is.setIcp(
-                "44101882");
+        IsType isGET = message2.getValue().getIs().get(vemPrvni);
+
+        String IsTypIco = isGET.getIco();
+        System.out.println("IsTypIco-> " + IsTypIco);
+        is.setIco(IsTypIco);
+
+        String IsTypIcz = isGET.getIcz();
+        System.out.println("IsTypIcz-> " + IsTypIcz);
+        is.setIcz(IsTypIcz);
+
+        String IsTypIcp = isGET.getIcp();
+        System.out.println("IsTypIcp-> " + IsTypIcp);
+        is.setIcp(IsTypIcp);
+
         AsType as2 = factoryDasta.createAsType();
 
-        as2.setVnitrni(
-                "801");
+        String IsTypAsVnitrni = isGET.getAs().getVnitrni();
+        System.out.println("IsTypAsVnitrni-> " + IsTypAsVnitrni);
+        as2.setVnitrni(IsTypAsVnitrni);
         is.setAs(as2);
 
         /**
@@ -150,102 +169,161 @@ public class DastaMessageJava {
          */
         Ip ip = factoryDsIp.createIp();
 
-        ip.setIdPac(
-                "7601019998");
-        ip.setRodcis(
-                "7601019998");
-        ip.setJmeno(
-                "Jmeno");
-        ip.setPrijmeni(
-                "Prijmeni");
+        Ip ipIsGET = isGET.getIp();
+
+        String IpIDPac = ipIsGET.getIdPac();
+        System.out.println("IsIpIdPac-> " + IpIDPac);
+        ip.setIdPac(IpIDPac);
+
+        String IpRodCis = ipIsGET.getRodcis();
+        System.out.println("IsIpRodneCislo-> " + IpRodCis);
+        ip.setRodcis(IpRodCis);
+
+        String IpJmeno = ipIsGET.getIdPac();
+        System.out.println("IsIpJmeno-> " + IpJmeno);
+        ip.setJmeno(IpJmeno);
+
+        String IpPrijmeni = ipIsGET.getPrijmeni();
+        System.out.println("IsIpPrijmeni-> " + IpPrijmeni);
+        ip.setPrijmeni(IpPrijmeni);
+
         DatXxType datDn = new DatXxType();
 
-        datDn.setFormat(
-                "D");
-        datDn.setValue(
-                "1976-01-01");
+        String IpDnFormat = ipIsGET.getDatDn().getFormat();
+        System.out.println("IpIsDnFormat-> " + IpDnFormat);
+        datDn.setFormat(IpDnFormat);
+
+        String IpDnValue = ipIsGET.getDatDn().getValue();
+        System.out.println("IpIsDnValue-> " + IpDnValue);
+        datDn.setValue(IpDnValue);
         ip.setDatDn(datDn);
 
+        String IpSex = ipIsGET.getSex().value();
+        System.out.println("IpSex-> " + IpSex);
         ip.setSex(SexType.M);
 
         KuZType kuZType = factoryDsIp.createKuZType();
 
-        kuZType.setTypku(
-                "AMBUL");
-        kuZType.setFazespec(
-                "ZF");
-        kuZType.setIdku(
-                "MEDICALC.FNPL.1234567890");
+        KuZType kuZIpIsGET = ipIsGET.getKu().getKuZ().get(vemPrvni);
+
+        String kuZTypku = kuZIpIsGET.getTypku();
+        System.out.println("kuZTypku-> " + kuZTypku);
+        kuZType.setTypku(kuZTypku);
+
+        String kuZFazespec = kuZIpIsGET.getFazespec();
+        System.out.println("kuZFazespec-> " + kuZFazespec);
+        kuZType.setFazespec(kuZFazespec);
+
+        String kuZIdku = kuZIpIsGET.getIdku();
+        System.out.println("kuZIdku-> " + kuZIdku);
+        kuZType.setIdku(kuZIdku);
+
         DatXxType datProv = new DatXxType();
         DatXxType datVydani = new DatXxType();
 
-        datProv.setValue(
-                "2006-12-03T11:00:00");
-        datVydani.setValue(
-                "2006-11-03T11:00:00");
-        kuZType.setDatProv(datProv);
+        String kuZDatProv = kuZIpIsGET.getDatProv().getValue();
+        System.out.println("kuZDatProv-> " + kuZDatProv);
+        datProv.setValue(kuZDatProv);
 
+        String kuZDatVydani = kuZIpIsGET.getDatVydani().getValue();
+        System.out.println("kuDatVydani-> " + kuZDatVydani);
+        datVydani.setValue(kuZDatVydani);
+
+        kuZType.setDatProv(datProv);
         kuZType.setDatVydani(datVydani);
         /*
          * Definice pracoviste, kde probehlo osetreni
          */
         PracovisteType pPracoviste = factoryDsIp.createPracovisteType();
 
-        pPracoviste.setIcz(
-                "44101000");
-        pPracoviste.setIcp(
-                "44101882");
-        pPracoviste.setOdb(
-                "501");
-        pPracoviste.setNazev(
-                "Chirurgická ambulance");
+        PracovisteType pPracKuZIpIsGET = kuZIpIsGET.getPPracoviste();
+
+        String pPracIcz = pPracKuZIpIsGET.getIcz();
+        System.out.println("pPracIcz-> " + pPracIcz);
+        pPracoviste.setIcz(pPracIcz);
+
+        String pPracIcp = pPracKuZIpIsGET.getIcp();
+        System.out.println("pPracIcp-> " + pPracIcp);
+        pPracoviste.setIcp(pPracIcp);
+
+        String pPracOdb = pPracKuZIpIsGET.getOdb();
+        System.out.println("pPracOdb-> " + pPracOdb);
+        pPracoviste.setOdb(pPracOdb);
+
+        String pPracNazev = pPracKuZIpIsGET.getNazev();
+        System.out.println("pPracNazev-> " + pPracNazev);
+        pPracoviste.setNazev(pPracNazev);
+
         kuZType.setPPracoviste(pPracoviste);
+
         TextType textType = factoryDsIp.createTextType();
         Ptext pText = factoryDsIp.createPtext();
+        Ptext pTextKuZIpIsGET = kuZIpIsGET.getText().getPtext();
 
-        pText.setSpace(
-                "preserve");
-        pText.setValue(
-                "Při fotbale si podvrkl pravé koleno. O koleno s náplní, "
-                + "čéška nebolestivá, bolestivá flexe kolena koleno špatně "
-                + "vyšetřitelné, zásuvka negativní RTG bez traumatu Dg.Distorsio geni l.dx"
-                + "Th provedena punkce kolenního kloubu.vypunktováno 60 ml krve "
-                + "bez tukových kapének, naložena ortesa Dop klidový režim kontrola zde za 2 dny dop");
+        String pTextSpace = pTextKuZIpIsGET.getSpace();
+        System.out.println("pTextSpace-> " + pTextSpace);
+        pText.setSpace(pTextSpace);
+
+        String pTextValue = pTextKuZIpIsGET.getValue();
+        System.out.println("pTextValue-> " + pTextValue);
+        pText.setValue(pTextValue);
+
         textType.setPtext(pText);
 
         kuZType.setText(textType);
 
         //Definice diagnozy 
         DgzType dgzType = factoryDsIp.createDgzType();
-        Diag diag = new Diag();
+        DgzType dgzTypeKuZIpIsGET = ipIsGET.getDg().getDgz().get(vemPrvni);
 
-        diag.setValue(
-                "I158");
-        diag.setPoradi(
-                1);
+        Diag diag = new Diag();
+        Diag diagDgzTypeKuZIpIsGET = dgzTypeKuZIpIsGET.getDiag();
+
+        String diagValue = diagDgzTypeKuZIpIsGET.getValue();
+        System.out.println("diagValue-> " + diagValue);
+        diag.setValue(diagValue);
+
+        int diagPoradi = diagDgzTypeKuZIpIsGET.getPoradi();
+        System.out.println("diagPoradi-> " + diagPoradi);
+        diag.setPoradi(diagPoradi);
         dgzType.setDiag(diag);
 
-        dgzType.setTypDg(
-                "P");
-        dgzType.setIndOpravSd(
-                "N");
+        String typDg = dgzTypeKuZIpIsGET.getTypDg();
+        System.out.println("typDg-> " + typDg);
+        dgzType.setTypDg(typDg);
+
+        String indOpravSd = dgzTypeKuZIpIsGET.getIndOpravSd();
+        System.out.println("IndOpravSd-> " + indOpravSd);
+        dgzType.setIndOpravSd(indOpravSd);
+
         List<DgzType> dgzTypes = kuZType.getDgVys();
 
         dgzTypes.add(dgzType);
 
         AuzkuType auzkuType = factoryDsIp.createAuzkuType();
+        AuzkuType auzkuTypeKuZIpIsGET = kuZIpIsGET.getAuzku().get(vemPrvni);
 
-        auzkuType.setIndikace(
-                "I");
-        auzkuType.setTyppolVz(
-                "V");
-        auzkuType.setDiag(
-                "I158");
+        String indikace = auzkuTypeKuZIpIsGET.getIndikace();
+        System.out.println("Indikace-> " + indikace);
+        auzkuType.setIndikace(indikace);
+
+        String typpolVz = auzkuTypeKuZIpIsGET.getTyppolVz();
+        System.out.println("TyppolVz-> " + typpolVz);
+        auzkuType.setTyppolVz(typpolVz);
+
+        String diagAuzku = auzkuTypeKuZIpIsGET.getDiag();
+        System.out.println("diagAuzku-> " + diagAuzku);
+        auzkuType.setDiag(diagAuzku);
+
         DatDuType datDu = factoryDsType.createDatDuType();
 
-        datDu.setValue(
-                "2006-12-03T11:00:00");
-        datDu.setTyp(LVTZDCUN.A);
+        String valueDatDuAuzku = auzkuTypeKuZIpIsGET.getDatDu().getValue();
+        System.out.println("Value datDuAuzku-> " + valueDatDuAuzku);
+        datDu.setValue(valueDatDuAuzku);
+        
+        LVTZDCUN typDatDuAuzku = auzkuTypeKuZIpIsGET.getDatDu().getTyp();
+        System.out.println("Typ datDuAuzku-> " + typDatDuAuzku.toString());
+        datDu.setTyp(typDatDuAuzku);
 
         auzkuType.setDatDu(datDu);
         List<AuzkuType> auzkuTypes = kuZType.getAuzku();

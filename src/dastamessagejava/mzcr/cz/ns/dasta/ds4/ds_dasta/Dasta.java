@@ -224,12 +224,12 @@ public class Dasta {
      * 
      * 
      */
-    /*public List<IsType> getIs() {
+    public List<IsType> getIs() {
         if (is == null) {
             is = new ArrayList<IsType>();
         }
         return this.is;
-    }*/
+    }
 
     /**
      * Gets the value of the dastaAny property.
